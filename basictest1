@@ -1,0 +1,4 @@
+#!/bin/bash
+input="pic1.ppm"
+output="output.of"
+cat $input | ./test > $output
