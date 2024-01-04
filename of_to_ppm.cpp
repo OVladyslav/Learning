@@ -14,6 +14,11 @@ using std::unordered_map;
 string format = "Our format";
 int width, height, colors_amount;
 
+struct color_values
+{
+	unsigned int r, g, b;
+};
+
 int main()
 {
 	string line;
@@ -25,24 +30,36 @@ int main()
 		cout << "Incorrect format\n";
 		return 1;
 	}
-	else cout << format << endl;
+	else cout << "P6" << endl;
 	
-	//take and outstream amount of colors
+	//take amount of colors
 	getline(cin, line);
 	std::stringstream amount(line);
 	amount >> colors_amount;
-	cout << colors_amount << endl;
 	
-	//outstrea the pallete
+	//form the pallete
+	unordered_map<char, color_values> pallete;
 	getline(cin, line);
 	char color;
 	while(line[0] != '?')
 	{
-		cout << line << endl;
+		std::stringstream colors(line);
+		colors >> color;
+		color_values cv;
+		colors >> cv.r;
+		colors >> cv.g;
+		colors >> cv.b;
+		pallete[color] = cv;
 		getline(cin, line);
 	}
 	
-	cout << line << endl;
+	std::stringstream colors(line);
+	colors >> color;
+	color_values cv;
+	colors >> cv.r;
+	colors >> cv.g;
+	colors >> cv.b;
+	pallete[color] = cv;
 	
 	//outstream comment
 	cout << "#Converted from .of format\n";
@@ -57,7 +74,18 @@ int main()
 	//outstream max color value
 	cout << "255\n";
 	
-	//outstream pixels in .of format from .of input
-	while(getline(cin,line)) cout << line << endl;
+	//outstream pixels in .ppm format converted from .of format
+	int size = width * height;
+	char aux;
+	for (int i = 0; i < height; i++)
+	{
+		getline(cin,line);
+		for(int j = 0; j < width; j++)
+		{
+			cout << (char)pallete[line[j]].r;
+			cout << (char)pallete[line[j]].g;
+			cout << (char)pallete[line[j]].b;
+		}
+	}
 	return 0;
 }
