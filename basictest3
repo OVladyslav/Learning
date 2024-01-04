@@ -1,0 +1,5 @@
+#!/bin/bash
+input="output.of"
+output="pic2.ppm"
+cat $input | ./test > $output
+gimp $output
