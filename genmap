@@ -1,0 +1,5 @@
+#!/bin/bash
+output="output.of"
+image="map1.ppm"
+./perlin | ./perlinmap | tee $output | ./test > $image
+gimp $image
